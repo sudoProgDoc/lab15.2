@@ -5,17 +5,18 @@ void encryptor(char* file_path, char* ou_file_path, int RecordLength, int Shift)
 {
     FILE* fl = fopen(file_path, "r");
     FILE* fm = fopen(ou_file_path, "w");
-    int i, *a, n, j = 0, l, w = 0;
+    int i, *a, n, j = 0, l;
+    bool IsEndOfFile = false;
     int byte = 8;
     RecordLength *= byte; //для удобство умножаю на байт, получаю количество двоичных символов в слове
     a = new int[2 * RecordLength];//дублирую массив для дублирования символов, можно создать отдельный массив, но лучше так я думаю
 
-    while (w == 0)
+    while (!IsEndOfFile)
     {
         n = getc(fl);
         if (n == EOF)
         {
-            w = 1;
+            IsEndOfFile = true;
             while (j < RecordLength && j != 0)//если достигли конец файла, но слово не собрано до конца
             {
                 n = ' ';
